@@ -1,25 +1,20 @@
 module.exports = function(grunt) {
 
-  grunt.registerTask(('watch'), [ 'watch' ]);
+  grunt.registerTask(('connect'), [ 'connect' ]);
 
   grunt.initConfig({
 
-    watch: {
-      js: {
-
-        files: ['javascript/*.js'],
+    connect: {
         options: {
 
           livereload: true,
-        }
-      },
-
-
-    }
+        },
+        files: ['app/javascript/*.js']
+      }
 
 
   });
 
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
 };

@@ -4,12 +4,13 @@
   "description": "A guitar/bass/anything multiFX",
   "main": "server.js",
   "dependencies": {
+    "express": "^4.13.0",
     "node": "^0.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
-    "grunt-contrib-watch": "^0.6.1"
+    "supervisor": "^0.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
