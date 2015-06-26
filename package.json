@@ -1,0 +1,36 @@
+{
+  "name": "affected",
+  "version": "1.0.0",
+  "description": "A guitar/bass/anything multiFX",
+  "main": "server.js",
+  "dependencies": {
+    "node": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelHazani/affected.git"
+  },
+  "keywords": [
+    "webAudio",
+    "node",
+    "live",
+    "audio",
+    "effects",
+    "sfx",
+    "delay",
+    "reverb",
+    "distortion",
+    "visualize",
+    "three.js"
+  ],
+  "author": "Michael Hazani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MichaelHazani/affected/issues"
+  },
+  "homepage": "https://github.com/MichaelHazani/affected#readme"
+}
