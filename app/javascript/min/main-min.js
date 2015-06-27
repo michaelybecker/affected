@@ -1,1 +1,1 @@
-document.write("Hello World!");
+"use strict";$(function(){function e(e){var o=new XMLHttpRequest;o.open("GET",e,!0),o.responseType="arraybuffer",o.onload=function(){n.decodeAudioData(o.response,function(e){t=e})},o.send()}function o(){c=n.createBufferSource(),c.buffer=t,c.connect(n.destination),c.start(0)}document.write("hello!");var n=new window.AudioContext,t,c,r=!1,u="audio/piano_sample.ogg";e(u),$(document).keypress(function(e){console.log(e.charCode),32==e.charCode&&r===!1?(r=!0,o()):32==e.charCode&&r===!0&&(r=!1,c.stop())})});
