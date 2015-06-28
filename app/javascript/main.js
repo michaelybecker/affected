@@ -4,23 +4,18 @@
 $(function(){
 
 document.write('hello!');
-
-
 var audioCtx = new window.AudioContext();
-var buf, source;
-
+var soundBuffer, soundSource;
+//var conUrl ='http://thingsinjars.com/lab/web-audio-tutorial/hello.mp3';
 var playing = false;
-
-
-var url = "audio/piano_sample.ogg";
-var convolver = audioCtx.createConvolver();
+var musicUrl = "audio/piano_sample.ogg";
+var conUrl = 'audio/Church-Schellingwoude.mp3';
 
 
 // function getStream(stream) {
 //   var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
 //   mediaStreamSource.connect(audioCtx.destination);
 // }
-loadSound(url);
 
 // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 // navigator.getUserMedia({audio: true}, getStream, error);
@@ -29,66 +24,89 @@ loadSound(url);
 //   alert('stream generation failed.');
 // }
 
-function loadSound(url) {
+function startSound() {
   var request = new XMLHttpRequest();
-  request.open('GET', url, true);
+  request.open('GET', musicUrl, true);
   request.responseType = 'arraybuffer';
   request.onload = function() {
+    var audioData = request.response;
 
-    audioCtx.decodeAudioData(request.response, function(buffer) {
-      buf = buffer;
-      source = audioCtx.createBufferSource();
-      source.buffer = buf;
-      source.connect(convolver);
-      convolver.connect(audioCtx.destination);
-    });
-  };
-
+    audioGraph(audioData);
+    };
     request.send();
 
-}
+  }
 
-function playSound(buffer) {
+function playSound() {
 
-convolver.buffer = source.buffer;
+  soundSource.start();
 
-source.start(0);
-  // source.connect(audioCtx.destination);
-  // source.start(0);
 
 }
 
+function stopSound() {
+
+  soundSource.stop();
+  }
 
 
 
 $(document).keypress(function(e) {
 
 console.log(e.charCode);
-  if (e.charCode == 32 && playing === false) {
+  if (e.charCode == 32 && !playing) {
     playing = true;
     console.log(playing);
-    playSound();
+    startSound();
   }
 
-  else if (e.charCode == 32 && playing === true) {
+  else {
     playing = false;
     console.log(playing);
-    source.stop();
+    stopSound();
   }
-
-  else if (e.charCode == 18) {
-    sample.togglePlayback();
-  }
-
 
 });
 
-//effect -- convolver
+function audioGraph(audioData) {
+  var convolver;
 
+  soundSource = audioCtx.createBufferSource();
+  audioCtx.decodeAudioData(audioData, function(soundBuffer){
+    soundSource.buffer = soundBuffer;
 
+    convolver = audioCtx.createConvolver();
 
-// source.connect(effect);
-//source.connect(audioCtx.destination);
+    //WIRING
+
+    soundSource.connect(convolver);
+    convolver.connect(audioCtx.destination);
+
+    //load convolution response
+
+    setReverbImpulseResponse(conUrl, convolver, playSound);
+
+    });
+
+  }
+
+function setReverbImpulseResponse(url, convolver, callback) {
+
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = "arraybuffer";
+
+  request.onload = function(){
+    audioCtx.decodeAudioData(request.response, function(convolverBuffer) {
+      convolver.buffer = convolverBuffer;
+      callback();
+
+    });
+
+  };
+  request.send();
+}
+
 
 
 
