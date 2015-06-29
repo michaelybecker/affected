@@ -3,13 +3,12 @@
 
 $(function(){
 
-document.write('hello!');
 var audioCtx = new window.AudioContext();
-var soundBuffer, soundSource;
+var soundBuffer, musicSource;
 //var conUrl ='http://thingsinjars.com/lab/web-audio-tutorial/hello.mp3';
 var playing = false;
 var musicUrl = "audio/piano_sample.ogg";
-var conUrl = 'audio/Church-Schellingwoude.mp3';
+var conUrl = "audio/IR/EMT 28 Echo Plate.wav";
 
 
 // function getStream(stream) {
@@ -37,16 +36,39 @@ function startSound() {
 
   }
 
+function audioGraph(audioData) {
+  var convolver;
+
+  musicSource = audioCtx.createBufferSource();
+  audioCtx.decodeAudioData(audioData, function(soundBuffer){
+    musicSource.buffer = soundBuffer;
+
+    convolver = audioCtx.createConvolver();
+
+    //WIRING
+
+    musicSource.connect(convolver);
+    convolver.connect(audioCtx.destination);
+
+    //load convolution response
+
+    setReverbImpulseResponse(conUrl, convolver, playSound);
+
+    });
+
+  }
+
+
 function playSound() {
 
-  soundSource.start();
+  musicSource.start();
 
 
 }
 
 function stopSound() {
 
-  soundSource.stop();
+  musicSource.stop();
   }
 
 
@@ -68,32 +90,11 @@ console.log(e.charCode);
 
 });
 
-function audioGraph(audioData) {
-  var convolver;
 
-  soundSource = audioCtx.createBufferSource();
-  audioCtx.decodeAudioData(audioData, function(soundBuffer){
-    soundSource.buffer = soundBuffer;
-
-    convolver = audioCtx.createConvolver();
-
-    //WIRING
-
-    soundSource.connect(convolver);
-    convolver.connect(audioCtx.destination);
-
-    //load convolution response
-
-    setReverbImpulseResponse(conUrl, convolver, playSound);
-
-    });
-
-  }
-
-function setReverbImpulseResponse(url, convolver, callback) {
+function setReverbImpulseResponse(conFile, convolver, callback) {
 
   var request = new XMLHttpRequest();
-  request.open('GET', url, true);
+  request.open('GET', conFile, true);
   request.responseType = "arraybuffer";
 
   request.onload = function(){
@@ -107,6 +108,18 @@ function setReverbImpulseResponse(url, convolver, callback) {
   request.send();
 }
 
+
+//reverb switch logic
+
+$('#subIR').submit(function(e){
+  e.preventDefault();
+  conUrl = 'audio/IR/' +
+  $('select[name="IRs"] option:selected').val();
+  //setReverbImpulseResponse(chosen, convolver, playSound);
+  console.log(conUrl);
+
+
+});
 
 
 
