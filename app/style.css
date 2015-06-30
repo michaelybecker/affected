@@ -1,0 +1,69 @@
+html {
+background-size:1000px 200px;
+background-repeat: no-repeat;
+background: white;
+}
+
+body {
+
+text-align: center;
+
+
+
+}
+
+
+
+#controls {
+  font-family: "Book Antiqua";
+  font-size: 30px;
+  margin-top:2em;
+}
+
+#subIR {
+margin-top:1px;
+font-family: "Book Antiqua";
+}
+
+.styled-select select {
+
+   background: green;
+   width: 300px;
+   height:30px;
+   padding: 5px;
+
+   font-size: 20px;
+   text-align: center;
+   font-family: "Book Antiqua";
+   font-size:20px;
+   line-height: 1;
+   border: 3;
+   border-radius: 4;
+   height: 34px;
+
+}
+
+
+
+.inToggle {
+
+font-size:30px;
+background: red;
+margin-top: 2em;
+margin-bottom:2em;
+
+}
+
+.switched {
+  background: green;
+}
+
+#volume {
+  background:blue;
+  font-size:40px;
+  font-family:"Book Antiqua";
+
+  border: 1;
+  border-radius:5;
+  margin-top:10px;
+}

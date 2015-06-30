@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="style.css">
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="javascript/main.js"></script>
 </head>
 <body>
 
+<div id="controls">
+<div id="source">Source: <br>
+<button class="inToggle">Live Input</button>
+<button class="inToggle">Short Clip</button>
+<div>Volume:</div>
+<button class="inToggle", id="volume">-</button>
+<button class="inToggle", id="volume">+</button>
 <form id="subIR">
-Reverb Type: <br>
+Reverb Type:
+<div class = "styled-select">
 <select name="IRs" onchange="$('#subIR').submit();">
 <option value="EMT 28 Echo Plate.wav">Echo Plate</option>
 <option value="EMT 30 Atmos Delay Plate.wav">Atmos Delay Plate</option>
@@ -17,6 +26,9 @@ Reverb Type: <br>
 <option value="Studio B 01 Near.wav">Studio - Near</option>
 <option value="Studio B 02 Far.wav">Studio - Far</option>
 </select>
+</div>
+</form>
+</div>
 <!-- <input type="submit">
  -->
 </form>
