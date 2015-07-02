@@ -1,10 +1,17 @@
+'use strict';
+
+
 var express = require('express');
 var app = express();
+var port = process.env.PORT || 3000;
 
 app.use(express.static('app'));
 
-if (!module.parent) {
-  var port = 3000;
-  app.listen(port);
-  console.log("Express app started on port: " + port);
-}
+app.listen(port, function() {
+  console.log('server available at http://localhost:' + port);
+});
+
+app.get('/', function(req, res) {
+  res.sendFile('index.html');
+
+});
