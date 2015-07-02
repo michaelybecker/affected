@@ -1,17 +1,24 @@
 'use strict';
 
-
-$(function(){
-
+  //threeJS
+  var scene, renderer, camera;
+  var box;
   var audioCtx = new window.AudioContext();
-  var soundBuffer, musicSource;
-  //var conUrl ='http://thingsinjars.com/lab/web-audio-tutorial/hello.mp3';
+  var soundBuffer, musicSource, array;
   var playing = false;
   var liveSoundPlaying = false;
   var musicUrl = "audio/piano_sample.ogg";
   var conUrl = "audio/IR/EMT 28 Echo Plate.wav";
-  var convolver, gainNode, audioInput;
+  var convolver, proc, gainNode, audioInput, analyserNode, bufferLength, dataArray;
   var startOffset = 0;
+  var data;
+
+$(function(){
+
+
+  //var conUrl ='http://thingsinjars.com/lab/web-audio-tutorial/hello.mp3';
+
+
 
   // function getStream(stream) {
   //   var mediaStreamSource = audioCtx.createMediaStreamSource(stream);
@@ -39,7 +46,6 @@ $(function(){
     }
 
   function audioGraph(audioData) {
-    var convolver;
 
     musicSource = audioCtx.createBufferSource();
     musicSource.loop = true;
@@ -49,17 +55,21 @@ $(function(){
 
       convolver = audioCtx.createConvolver();
       gainNode = audioCtx.createGain();
+      analyserNode = audioCtx.createAnalyser();
+      proc = audioCtx.createScriptProcessor(1024,1,1);
+      //analyserNode.fftSize = 256;
 
       //WIRING
 
-      musicSource.connect(convolver);
+      musicSource.connect(analyserNode);
+      analyserNode.connect(proc);
+      proc.connect(convolver);
       convolver.connect(gainNode);
       gainNode.connect(audioCtx.destination);
 
       //load convolution response
 
       setReverbImpulseResponse(conUrl, convolver, playSound);
-
       });
 
     }
@@ -89,9 +99,12 @@ $(function(){
   function playSound() {
 
     musicSource.start(0, startOffset);
-
-
-  }
+    data = new Uint8Array(analyserNode.frequencyBinCount);
+    proc.onaudioprocess = function(){
+      analyserNode.getByteFrequencyData(data);
+      console.log(data[5]);
+    }
+}
   function stopSound() {
 
     musicSource.stop();
@@ -197,6 +210,58 @@ $('.inToggle').click(function(e){
 
   });
 
+init();
+render();
 
 });
+
+
+//THREE.js stuff!
+
+function init() {
+scene = new THREE.Scene();
+camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 2000 );
+scene.add(camera);
+
+
+//light
+var hemiLight = new THREE.HemisphereLight(0xffffff, 0x00ff00, 0.6);
+hemiLight.position.set(0, 10, 0);
+scene.add(hemiLight);
+
+var pointLight = new THREE.PointLight(0x00FF00, 1);
+pointLight.position.set(0, 300, 200);
+
+scene.add(pointLight);
+//cube
+
+var cubeGeo = new THREE.BoxGeometry(4, 4, 4);
+var cubeMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
+var cube = new THREE.Mesh(cubeGeo, cubeMaterial);
+scene.add(cube);
+camera.lookAt(cube);
+camera.position.z = -30;
+
+//sphere
+
+var sphereGeo = new THREE.SphereGeometry( 10,10,10 );
+var sphereMat = new THREE.MeshBasicMaterial( {color:0xFF00FF});
+var sphere = new THREE.Mesh(sphereGeo, sphereMat);
+scene.add(sphere);
+
+renderer = new THREE.WebGLRenderer( {antialias: true, alpha:false} );
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById("threeDiv").appendChild(renderer.domElement);
+
+//renderer.setClearColor(0xFF45FF);
+}
+
+function render() {
+requestAnimationFrame(render);
+renderer.render(scene, camera);
+
+}
+
+
+
 
