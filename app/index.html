@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta property="og:site_name" content="Affected">
+<meta property="og:title" content="A webAudio visualization exercise by Michael Hazani">
+<meta property="og:description" content="live audio / soundfile playback, effects and visualization">
+<meta property="og:image" content="images/affected.png">
+<meta property="og:url" content="affected.michaelhazani.net">
+<meta property="og:type" content="art">
 <link rel="stylesheet" type="text/css" href="style.css">
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="javascript/three.min.js"></script>
 <script src="javascript/main.js"></script>
 </head>
 <body>
+<div id="title">
+<u>AFFECTED </u><br><br>a WebAudio interface with live sound, reverb, <br>and frequency-based visualization
 
+</div>
 <div id="controls">
 <div id="source">Source: <br>
 <button class="inToggle">Live Input</button>
@@ -26,10 +36,11 @@ Reverb Type:
 <option value="Student Union Stairwell 01 Center.wav">Stairwell</option>
 <option value="Studio B 01 Near.wav">Studio - Near</option>
 <option value="Studio B 02 Far.wav">Studio - Far</option>
-</select>
+</select><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </div>
 </form>
 </div>
-<div id="threeDiv"></div>
+<div id="threeDiv" align="center"></div>
+
 </body>
 </html>

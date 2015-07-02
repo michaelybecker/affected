@@ -1,7 +1,7 @@
 'use strict';
 
   //threeJS
-  var scene, renderer, camera;
+  var scene, camera, renderer, cube, hemilight, sphere;
   var box;
   var audioCtx = new window.AudioContext();
   var soundBuffer, musicSource, array;
@@ -61,6 +61,9 @@ $(function(){
 
       //WIRING
 
+
+      musicSource.connect(convolver);
+      musicSource.connect(gainNode);
       musicSource.connect(analyserNode);
       analyserNode.connect(proc);
       proc.connect(convolver);
@@ -84,9 +87,22 @@ $(function(){
     function(stream){
       audioInput = audioCtx.createMediaStreamSource(stream);
       var convolver2 = audioCtx.createConvolver();
-      audioInput.connect(convolver2)
-      convolver2.connect(audioCtx.destination);
+      gainNode = audioCtx.createGain();
+      analyserNode = audioCtx.createAnalyser();
+      proc = audioCtx.createScriptProcessor(1024,1,1);
+
+      audioInput.connect(convolver2);
+      audioInput.connect(gainNode);
+      audioInput.connect(analyserNode);
+      analyserNode.connect(proc);
+      proc.connect(convolver2);
+      convolver2.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
       setReverbImpulseResponse(conUrl, convolver2);
+      data = new Uint8Array(analyserNode.frequencyBinCount);
+      proc.onaudioprocess = function(){
+      analyserNode.getByteFrequencyData(data);
+      }
     },
 
     function(error){
@@ -102,7 +118,7 @@ $(function(){
     data = new Uint8Array(analyserNode.frequencyBinCount);
     proc.onaudioprocess = function(){
       analyserNode.getByteFrequencyData(data);
-      console.log(data[5]);
+      // console.log(data[5]);
     }
 }
   function stopSound() {
@@ -111,25 +127,6 @@ $(function(){
     startOffset += audioCtx.currentTime;
     }
 
-
-
-  $(document).keypress(function(e) {
-
-
-
-  //+ and - for volume
-     if (e.charCode == 61){
-      gainNode.gain.value += 0.1;
-      console.log(e.charCode);
-    }
-
-    else if (e.charCode == 45){
-      gainNode.gain.value-= 0.1;
-
-    }
-
-
-  });
 
 //source toggle
 $('.inToggle').click(function(e){
@@ -220,9 +217,9 @@ render();
 
 function init() {
 scene = new THREE.Scene();
-camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 2000 );
+camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000 );
 scene.add(camera);
-
+camera.position.z = 50;
 
 //light
 var hemiLight = new THREE.HemisphereLight(0xffffff, 0x00ff00, 0.6);
@@ -233,33 +230,46 @@ var pointLight = new THREE.PointLight(0x00FF00, 1);
 pointLight.position.set(0, 300, 200);
 
 scene.add(pointLight);
+
+
 //cube
 
-var cubeGeo = new THREE.BoxGeometry(4, 4, 4);
-var cubeMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
-var cube = new THREE.Mesh(cubeGeo, cubeMaterial);
-scene.add(cube);
-camera.lookAt(cube);
-camera.position.z = -30;
+//test cube
+  var geometry = new THREE.BoxGeometry( 4, 4, 4 );
+  var material = new THREE.MeshPhongMaterial( {
+                                              color: 0xFF0080,
+                                              transparent: false,
+                                              opacity: 1 } );
+  cube = new THREE.Mesh( geometry, material );
+  cube.position.set(13,20,0);
+  scene.add( cube );
+
 
 //sphere
 
-var sphereGeo = new THREE.SphereGeometry( 10,10,10 );
-var sphereMat = new THREE.MeshBasicMaterial( {color:0xFF00FF});
-var sphere = new THREE.Mesh(sphereGeo, sphereMat);
+var sphereGeo = new THREE.SphereGeometry( 3,100,10 );
+var sphereMat = new THREE.MeshPhongMaterial( {color:0xFF0080});
+sphere = new THREE.Mesh(sphereGeo, sphereMat);
+sphere.position.set(-13,20,0);
 scene.add(sphere);
 
-renderer = new THREE.WebGLRenderer( {antialias: true, alpha:false} );
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer = new THREE.WebGLRenderer( {antialias: true, alpha:true} );
+renderer.setSize(window.innerWidth,window.innerHeight);
 document.getElementById("threeDiv").appendChild(renderer.domElement);
 
 //renderer.setClearColor(0xFF45FF);
 }
-
+var i = 1;
 function render() {
+
 requestAnimationFrame(render);
 renderer.render(scene, camera);
-
+cube.rotation.y+=0.01;
+sphere.rotation.y-=0.01;
+if (typeof(data)!=="undefined" && data!==0){
+cube.scale.y = data[5]/70;
+sphere.scale.y = data[5]/70;
+}
 }
 
 
