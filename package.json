@@ -2,8 +2,9 @@
   "name": "affected",
   "version": "1.0.0",
   "description": "A guitar/bass/anything multiFX",
-  "main": "server.js",
+  "main": "server-min.js",
   "dependencies": {
+    "compression": "^1.6.0",
     "express": "^4.13.0",
     "node": "^0.0.0"
   },
