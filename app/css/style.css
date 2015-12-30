@@ -1,40 +1,60 @@
 body {
-
-text-align: center;
-color:#901090;
-font-family: 'Orbitron', sans-serif;
+color:hsl(247, 10%, 60%);
+font-family: 'Quicksand', sans-serif;
+background-color: hsl(247, 100%, 97%);
 }
 
-#threeIntro {
+#title {
+  font-size: 5em;
+  text-align: center;
+  font-weight: 100;
+}
 
-margin: auto;
-width:100%;
-padding: 10x;
-margin-top: 140px;
-
+#subtitle {
+  font-size: .3em;
 }
 
 #threeDiv {
 
-margin: auto;
+margin: auto 0;
+margin-top: -200px;
+margin-bottom: -200px;
 width:100%;
-padding: 0x;
-margin-top: 0px;
-position:absolute;
-top:150px;
-left:0px;
-z-index: -1;
+
 
 }
+
 
 
 #controls {
-  font-size: 30px;
+  font-size: 1.5em;
   margin-top:2em;
 }
 
+
+#volume {
+  margin-top: .5em;
+  width: 33%;
+  height: 100%;
+  text-align: center;
+  margin: 0 auto;
+  display:inline-block;
+  vertical-align: middle;
+}
+
+#source {
+  float:left;
+  text-align: center;
+  width: 33%;
+  height: 100%;
+  vertical-align: middle;
+}
+
 #subIR {
-margin-top:1px;
+  width: 33%;
+float: right;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .styled-select select {
@@ -46,7 +66,6 @@ margin-top:1px;
 
    font-size: 20px;
    text-align: center;
-   font-size:20px;
    line-height: 1;
    border: 3;
    border-radius: 4;
@@ -56,25 +75,35 @@ margin-top:1px;
 
 
 
-.inToggle {
+.button {
 
-font-size:30px;
-background: red;
-margin-top: 2em;
-margin-bottom:2em;
+font-size:.4em;
+background: hsl(247, 30%, 90%);
+
+ -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+min-width:6%;
 
 }
+
+.button active {
+
+background: hsl(247, 30%, 20%);
+
+}
+
+#volume-min, #volume-plus {
+  width:5%;
+}
+
 
 .switched {
-  background: green;
+  background: hsl(247, 30%, 90%);
 }
 
-#volume {
-  background:blue;
-  font-size:40px;
-  font-family:"Book Antiqua";
-
+.styled-select {
+  background:hsl(247, 30%, 90%);
   border: 1;
-  border-radius:5;
+  border-radius:4;
   margin-top:10px;
 }

@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<meta name=viewport content="width=device-width, initial-scale=1">
-
-<meta property="og:site_name" content="Affected">
-<meta property="og:title" content="A webAudio visualization exercise by Michael Hazani">
-<meta property="og:description" content="live audio / soundfile playback, effects and visualization">
-<meta property="og:image" content="images/affected.png">
-<meta property="og:url" content="affected.michaelhazani.net">
-<meta property="og:type" content="art">
-<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="./css/style-min.css">
-
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta property="og:site_name" content="Affected">
+    <meta property="og:title" content="A webAudio visualization exercise by Michael Hazani">
+    <meta property="og:description" content="live audio / soundfile playback, effects and visualization">
+    <meta property="og:image" content="images/affected.png">
+    <meta property="og:url" content="affected.michaelhazani.net">
+    <meta property="og:type" content="art">
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./css/style-min.css">
 </head>
-<body>
-<div id="title">
-<u>AFFECTED </u><br><br>a WebAudio interface with live sound, reverb, <br>and frequency-based visualization
 
-</div>
-<div id="controls">
-<div id="source">Source: <br>
-<button class="inToggle">Live Input</button>
-<button class="inToggle">Short Clip</button>
-<div>Volume:</div>
-<button class="inToggle", id="volume">-</button>
-<button class="inToggle", id="volume">+</button>
-<form id="subIR">
-Reverb Type:
-<div class = "styled-select">
-<select name="IRs" onchange="$('#subIR').submit();">
-<option value="EMT 28 Echo Plate.wav">Echo Plate</option>
-<option value="EMT 30 Atmos Delay Plate.wav">Atmos Delay Plate</option>
-<option value="EMT Combing Plate.wav">Combing Plate</option>
-<option value="EMT Dark Tail Plate.wav">Dark Tail Plate</option>
-<option value="Student Union Stairwell 01 Center.wav">Stairwell</option>
-<option value="Studio B 01 Near.wav">Studio - Near</option>
-<option value="Studio B 02 Far.wav">Studio - Far</option>
-</select><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</div>
-</form>
-</div>
-<div id="threeDiv" align="center"></div>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="javascript/min/three.min.js"></script>
-<script src="javascript/min/main-min.js"></script>
+<body>
+    <div id="title">
+        AFFECTED
+        <br>
+        <div id="subtitle">
+        <br>a WebAudio example featuring live sound, convolution reverb,
+        <br>and frequency-based visualization
+    </div>
+    </div>
+    <div id="threeDiv"></div>
+    <div id="controls">
+        <span id="source">Source: <br>
+            <button class="button">Live Input</button>
+            <button class="button">Short Clip</button>
+        </span>
+        <span id="volume">Volume: <br>
+            <button class="inToggle" , id="volume-min">-</button>
+            <button class="inToggle" , id="volume-plus">+</button>
+        </span>
+        <form id="subIR">
+            Reverb Type: <br>
+            <select name="IRs" class="styled-select" onchange="$('#subIR').submit();">
+                <option value="EMT 28 Echo Plate.wav">Echo Plate</option>
+                <option value="EMT 30 Atmos Delay Plate.wav">Atmos Delay Plate</option>
+                <option value="EMT Combing Plate.wav">Combing Plate</option>
+                <option value="EMT Dark Tail Plate.wav">Dark Tail Plate</option>
+                <option value="Student Union Stairwell 01 Center.wav">Stairwell</option>
+                <option value="Studio B 01 Near.wav">Studio - Near</option>
+                <option value="Studio B 02 Far.wav">Studio - Far</option>
+            </select>
+        </form>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="javascript/min/three.min.js"></script>
+    <script src="javascript/min/main-min.js"></script>
 </body>
+
 </html>
