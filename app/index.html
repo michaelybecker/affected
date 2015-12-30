@@ -10,41 +10,47 @@
     <meta property="og:image" content="images/affected.png">
     <meta property="og:url" content="affected.michaelhazani.net">
     <meta property="og:type" content="art">
-    <link href='https://fonts.googleapis.com/css?family=Quicksand:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/style-min.css">
 </head>
 
 <body>
-    <div id="title">
-        AFFECTED
-        <br>
-        <div id="subtitle">
-        <br>a WebAudio example featuring live sound, convolution reverb,
-        <br>and frequency-based visualization
-    </div>
-    </div>
-    <div id="threeDiv"></div>
-    <div id="controls">
-        <span id="source">Source: <br>
-            <button class="button">Live Input</button>
-            <button class="button">Short Clip</button>
+    <div id="wrapper">
+        <section id="title">
+            affected
+        </section>
+        <section id="subtitle">
+            <br>(a three.js+WebAudio Visualization Experiment)
+        </section>
+        <section id="threeDiv"></section>
+        <footer id="controls">
+            <span id="source">Source <br>
+            <button class="button">Microphone</button>
+            <button class="button">Chopin</button>
         </span>
-        <span id="volume">Volume: <br>
-            <button class="inToggle" , id="volume-min">-</button>
-            <button class="inToggle" , id="volume-plus">+</button>
-        </span>
-        <form id="subIR">
-            Reverb Type: <br>
-            <select name="IRs" class="styled-select" onchange="$('#subIR').submit();">
-                <option value="EMT 28 Echo Plate.wav">Echo Plate</option>
-                <option value="EMT 30 Atmos Delay Plate.wav">Atmos Delay Plate</option>
-                <option value="EMT Combing Plate.wav">Combing Plate</option>
-                <option value="EMT Dark Tail Plate.wav">Dark Tail Plate</option>
-                <option value="Student Union Stairwell 01 Center.wav">Stairwell</option>
-                <option value="Studio B 01 Near.wav">Studio - Near</option>
-                <option value="Studio B 02 Far.wav">Studio - Far</option>
-            </select>
-        </form>
+            <span id="volume">Volume: <span class="volnum">–</span>
+            <br>
+            <button class="button" , id="volume-min">Softer
+            </button>
+            <button class="button" , id="volume-plus">Louder</button>
+            </span>
+            <form id="subIR">
+                Convolution Type
+                <br>
+                <select name="IRs" class="styled-select" onchange="$('#subIR').submit();">
+                    <option value="EMT 28 Echo Plate.wav">Echo Plate</option>
+                    <option value="EMT 30 Atmos Delay Plate.wav">Atmos Delay Plate</option>
+                    <option value="EMT Combing Plate.wav">Combing Plate</option>
+                    <option value="EMT Dark Tail Plate.wav">Dark Tail Plate</option>
+                    <option value="Student Union Stairwell 01 Center.wav">Stairwell</option>
+                    <option value="Studio B 01 Near.wav">Studio - Near</option>
+                    <option value="Studio B 02 Far.wav">Studio - Far</option>
+                </select>
+            </form>
+        <section id="credits">
+        ©2015, Made by Michael Hazani except where Chopin. <a href="http://github.com/michaelhazani/affected" alt="GitHub" target="_blank">Github</a></section>
+        </footer>
+
     </div>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="javascript/min/three.min.js"></script>

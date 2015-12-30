@@ -134,27 +134,32 @@ $(function() {
 
     //source toggle
     $('.button').click(function(e) {
+        // console.log(e);
 
-        if (e.target.innerText === "Live Input" && !liveSoundPlaying) {
+        if (e.target.innerText === "Microphone" && !liveSoundPlaying) {
             $(this).addClass('switched');
             liveSoundPlaying = true;
             liveSound();
-        } else if (e.target.innerText === "Live Input" && liveSoundPlaying) {
+        } else if (e.target.innerText === "Microphone" && liveSoundPlaying) {
             $(this).removeClass('switched');
             liveSoundPlaying = false;
             audioInput.disconnect();
-        } else if (e.target.innerText === "Short Clip" && !playing) {
+        } else if (e.target.innerText === "Chopin" && !playing) {
             $(this).addClass('switched');
+            console.log("start playing");
             playing = true;
             startSound();
-        } else if (e.target.innerText === "Short Clip" && playing) {
+            $(".volnum").text(1);
+        } else if (e.target.innerText === "Chopin" && playing) {
             $(this).removeClass('switched');
             playing = false;
             stopSound();
-        } else if (e.target.innerText === "-") {
+        } else if (e.target.innerText === "Softer" && gainNode.gain.value >= 0) {
+            $(".volnum").text(gainNode.gain.value.toFixed(1));
             gainNode.gain.value -= 0.1;
-        } else if (e.target.innerText === "+") {
+        } else if (e.target.innerText === "Louder" && gainNode.gain.value <= 10){
             gainNode.gain.value += 0.1;
+            $(".volnum").text(gainNode.gain.value.toFixed(1));
         }
 
     })
@@ -209,7 +214,7 @@ $(function() {
 
 function init() {
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 80);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 800);
     scene.add(camera);
     camera.position.set(0, 0, 50);
 
@@ -224,45 +229,37 @@ function init() {
     scene.add(pointLight);
 
 
-    //resize helper
-    window.addEventListener('resize', function() {
-        // notify the renderer of the size change
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        // update the camera
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    });
 
-    //cube
+    // //cube
 
-    //test cube
-    var geometry = new THREE.BoxGeometry(15,15,15);
-    var material = new THREE.MeshPhongMaterial({
-        color: 0xFF00FF,
+    // //test cube
+    // var geometry = new THREE.BoxGeometry(15, 15, 15);
+    // var material = new THREE.MeshPhongMaterial({
+    //     color: 0xFF00FF,
 
-        wireframe: true,
-        opacity: 1
-    });
-    cube = new THREE.Mesh(geometry, material);
-    cube.position.set(40, 0, 0);
-    scene.add(cube);
+    //     wireframe: true,
+    //     opacity: 1
+    // });
+    // cube = new THREE.Mesh(geometry, material);
+    // cube.position.set(40, 0, 0);
+    // scene.add(cube);
 
 
-    //pyramid
-var pyraGeo = new THREE.IcosahedronGeometry( 13, 2);
-    var pyraMat = new THREE.MeshPhongMaterial({
-        color: 0xFF00FF,
-        wireframe: true
-    });
-    pyramid = new THREE.Mesh(pyraGeo, pyraMat);
-    pyramid.position.set(-40, 0, 0);
-    scene.add(pyramid);
+    // //pyramid
+    // var pyraGeo = new THREE.IcosahedronGeometry(13, 1);
+    // var pyraMat = new THREE.MeshPhongMaterial({
+    //     color: 0xFF00FF,
+    //     wireframe: true
+    // });
+    // pyramid = new THREE.Mesh(pyraGeo, pyraMat);
+    // pyramid.position.set(-40, 0, 0);
+    // scene.add(pyramid);
 
 
 
     //sphere
 
-    var sphereGeo = new THREE.SphereGeometry(13, 10, 10);
+    var sphereGeo = new THREE.SphereGeometry(20, 20, 10);
     var sphereMat = new THREE.MeshPhongMaterial({
         color: 0xFF00FF,
         wireframe: true
@@ -278,20 +275,36 @@ var pyraGeo = new THREE.IcosahedronGeometry( 13, 2);
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById("threeDiv").appendChild(renderer.domElement);
 
-    //renderer.setClearColor(0xFF45FF);
+    //resize helper
+    window.addEventListener('resize', function() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    }, false);
+
+
 }
-var i = 1;
+
+
+
+// var i = 1;
 
 function render() {
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
-    cube.rotation.y += 0.01;
-    sphere.rotation.y += 0.01;
-    pyramid.rotation.y += 0.01;
+    // cube.rotation.y += 0.01;
+    sphere.rotation.y += 0.006;
+    // pyramid.rotation.y += 0.01;
 
     if (typeof(data) !== "undefined" && data !== 0) {
-        cube.scale.y = data[5] / 70;
+        // cube.scale.z = data[5] / 70;
+        sphere.scale.z = data[5] / 70;
+        sphere.scale.x = data[5] / 70;
         sphere.scale.y = data[5] / 70;
+        // pyramid.scale.x = data[5] / 70;
     }
 }
