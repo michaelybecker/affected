@@ -10,14 +10,11 @@ body {
     font-weight: 400;
 }
 
-
-
-
 #subtitle {
     font-size: 1.5em;
     text-align: center;
     margin-top: -20px;
-    font-weight:700;
+    font-weight: 700;
     font-style: italic;
 }
 
@@ -35,17 +32,14 @@ body {
     z-index: -1;
 }
 
-
-
-
 #controls {
     font-size: 1.5em;
     line-height: 1.5em;
-    padding:0;
+    padding: 0;
     margin: 0;
-/*    margin-top: 35%;*/
+    /*    margin-top: 35%;*/
     font-weight: 400;
-/*    min-height:300px;*/
+    /*    min-height:300px;*/
     color: hsl(247, 30%, 30%);
     background-color: hsla(67, 80%, 3%, .3);
     vertical-align: center;
@@ -59,7 +53,7 @@ body {
     margin: 0 auto;
     display: inline-block;
     vertical-align: middle;
-        padding:0;
+    padding: 0;
 }
 
 #source {
@@ -68,9 +62,9 @@ body {
     width: 33.3%;
     height: 100%;
     vertical-align: middle;
-        margin: 0 auto;
+    margin: 0 auto;
     display: inline-block;
-    padding:0;
+    padding: 0;
 }
 
 #subIR {
@@ -78,17 +72,17 @@ body {
     float: right;
     text-align: center;
     vertical-align: middle;
-        display: inline-block;
-        margin: 0 auto;
-        padding:0;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .styled-select select {
     background: green;
-/*    width: 300px;
+    /*    width: 300px;
     height: 30px;*/
     padding: 5px;
-/*    font-size: 20px;*/
+    /*    font-size: 20px;*/
     text-align: center;
     line-height: 1;
     border: 3;
@@ -124,13 +118,11 @@ body {
 
 .switched {
     background: hsl(247, 30%, 90%);
-        -moz-border-radius: 15px;
+    -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     font-family: 'Arvo', serif;
     font-weight: 400;
 }
-
-
 
 .styled-select {
     background: hsl(247, 30%, 90%);
@@ -144,15 +136,31 @@ body {
 }
 
 footer {
-    width:100%;
-    height:80px;
-    position:absolute;
-    bottom:0;
-    left:0;
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 #credits {
     text-align: center;
-    font-size:0.3em;
+    font-size: 0.3em;
+}
 
+@media screen and (max-width: 629px) {
+
+    footer {
+    width: 100%;
+    font-size: .2em;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+        font-size: 10px;
+}
+
+#subIR, #source, #volume {
+    font-size: 10px;
+}
 }
